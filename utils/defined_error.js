@@ -7,6 +7,9 @@ class AppError extends Error {
   }
 }
 
+
+
+
 const throwError = (statusCode, message) => {
   throw new AppError(message, statusCode);
 };
