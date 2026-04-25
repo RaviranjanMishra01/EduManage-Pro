@@ -2,429 +2,610 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Teacher Dashboard — CoolManagement</title>
 
-  <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <!-- Google Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :root {
-      --primary: #1a73e8;
-      --primary-light: #4285f4;
+      --primary: #1e3a8a;       /* deep blue */
+      --primary-light: #3b82f6;
+      --primary-glow: #dbeafe;
+      --secondary: #0f172a;
       --success: #10b981;
       --danger: #ef4444;
       --warning: #f59e0b;
-      --dark-green: #059669;
-      --gray: #6b7280;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --shadow: 0 10px 30px rgba(26, 115, 232, 0.12);
-      --radius: 20px;
-      --transition: all 0.3s ease;
+      --info: #06b6d4;
+      --gray-50: #f9fafb;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --text-dark: #0f172a;
+      --text-muted: #64748b;
+      --bg-page: #f1f5f9;
+      --card-bg: #ffffff;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg: 0 20px 25px -5px rgb(0 0 0 / 0.08), 0 8px 10px -6px rgb(0 0 0 / 0.05);
+      --shadow-xl: 0 25px 50px -12px rgb(0 0 0 / 0.15);
+      --radius-lg: 28px;
+      --radius-md: 20px;
+      --radius-sm: 16px;
+      --transition: all 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      background: var(--bg-page);
+      color: var(--text-dark);
+      line-height: 1.5;
       min-height: 100vh;
     }
 
-    /* Sidebar Navigation */
+    /* ========== SIDEBAR (glassmorphism premium) ========== */
     .sidebar {
       position: fixed;
-      left: 0; top: 0; bottom: 0;
-      width: 280px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 290px;
+      background: rgba(15, 23, 42, 0.96);
+      backdrop-filter: blur(16px);
+      border-right: 1px solid rgba(255,255,255,0.1);
+      color: #e2e8f0;
       padding: 32px 24px;
-      box-shadow: 8px 0 30px rgba(26, 115, 232, 0.2);
-      z-index: 1000;
+      z-index: 1050;
+      transition: transform 0.3s ease;
+      box-shadow: 10px 0 30px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
     }
 
     .logo {
-      font-size: 32px;
-      font-weight: 900;
+      font-size: 1.9rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #fff, #94a3b8);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
       text-align: center;
-      margin-bottom: 48px;
-      letter-spacing: -1px;
+      margin-bottom: 40px;
+      letter-spacing: -0.5px;
     }
 
     .user-info {
+      background: rgba(255,255,255,0.08);
+      backdrop-filter: blur(4px);
+      border-radius: var(--radius-sm);
+      padding: 18px 16px;
       text-align: center;
       margin-bottom: 40px;
-      padding: 16px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.15);
     }
 
     .user-info h3 {
-      font-size: 18px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: white;
       margin-bottom: 6px;
     }
 
     .user-info p {
-      font-size: 14px;
-      opacity: 0.9;
+      font-size: 0.8rem;
+      opacity: 0.8;
     }
 
     .nav-menu {
       list-style: none;
+      flex-grow: 1;
     }
 
     .nav-menu a {
       display: flex;
       align-items: center;
-      padding: 14px 18px;
-      color: white;
+      gap: 14px;
+      padding: 12px 18px;
+      color: #cbd5e6;
       text-decoration: none;
-      border-radius: 12px;
-      margin-bottom: 8px;
-      font-weight: 600;
+      border-radius: 14px;
+      font-weight: 500;
       transition: var(--transition);
+      margin-bottom: 8px;
     }
 
     .nav-menu a i {
-      margin-right: 12px;
-      font-size: 18px;
+      width: 24px;
+      font-size: 1.2rem;
     }
 
     .nav-menu a:hover {
-      background: rgba(255,255,255,0.2);
-      transform: translateX(8px);
+      background: rgba(59,130,246,0.25);
+      color: white;
+      transform: translateX(6px);
     }
 
-    .nav-menu .logout {
+    .logout {
       margin-top: auto;
-      background: rgba(239, 68, 68, 0.2);
     }
-
-    .nav-menu .logout:hover {
+    .logout a {
+      background: rgba(239,68,68,0.15);
+      color: #fecaca;
+    }
+    .logout a:hover {
       background: #ef4444;
+      color: white;
     }
 
-    /* Main Content */
+    /* Mobile sidebar toggle button */
+    .mobile-toggle {
+      display: none;
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: white;
+      border: none;
+      width: 48px;
+      height: 48px;
+      border-radius: 30px;
+      box-shadow: var(--shadow-lg);
+      z-index: 1060;
+      cursor: pointer;
+      color: var(--primary);
+      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+
+    /* main content */
     .main-content {
-      margin-left: 280px;
-      padding: 40px;
-      min-height: 100vh;
+      margin-left: 290px;
+      padding: 40px 48px;
+      transition: margin 0.3s;
     }
 
-    .header {
+    /* header */
+    .page-header {
       margin-bottom: 40px;
     }
-
-    .header h1 {
-      font-size: 36px;
+    .page-header h1 {
+      font-size: 2.2rem;
       font-weight: 800;
-      background: linear-gradient(90deg, var(--primary), #3367d6);
+      background: linear-gradient(125deg, #0f2b3d, var(--primary-light));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
       background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
     }
-
-    .header p {
-      color: var(--text-light);
-      font-size: 17px;
+    .page-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
       margin-top: 8px;
     }
 
-    /* Cards Grid */
+    /* Cards grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
       gap: 28px;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
     }
 
     .card {
-      background: var(--card);
-      padding: 28px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
+      background: var(--card-bg);
+      border-radius: var(--radius-md);
+      padding: 26px 28px;
+      box-shadow: var(--shadow-md);
       transition: var(--transition);
+      border: 1px solid var(--gray-200);
+      margin-bottom: 1.2rem;
     }
-
     .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 50px rgba(26, 115, 232, 0.18);
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-xl);
+      border-color: var(--primary-glow);
     }
-
+    .class-card {
+      background: linear-gradient(145deg, #ffffff, #f8fafc);
+      border-left: 5px solid var(--primary-light);
+    }
     .card h3 {
-      font-size: 22px;
-      margin-bottom: 20px;
-      color: var(--primary);
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 18px;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
+      color: var(--primary);
     }
-
-    .class-card {
-      background: linear-gradient(135deg, #f0f7ff, #e0f2fe);
-      border: 2px dashed var(--primary);
-    }
-
-    .btn {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-weight: 600;
-      text-decoration: none;
-      font-size: 14px;
-      transition: var(--transition);
-      margin-right: 8px;
-      margin-bottom: 8px;
-    }
-
-    .btn-small { padding: 8px 14px; font-size: 13px; }
-
-    .btn-blue { background: var(--primary); color: white; }
-    .btn-green { background: var(--success); color: white; }
-    .btn-red { background: var(--danger); color: white; }
-    .btn-dark-green { background: var(--dark-green); color: white; }
-    .btn-gray { background: var(--gray); color: white; }
-    .btn-disabled { background: #94a3b8; color: white; cursor: not-allowed; opacity: 0.7; }
-
-    .btn:hover { transform: translateY(-2px); }
-
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 16px;
+      gap: 12px;
+      margin-top: 20px;
     }
 
-    /* Tables */
+    /* buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+    .btn-small {
+      padding: 7px 14px;
+      font-size: 0.75rem;
+    }
+    .btn-blue { background: var(--primary-light); color: white; box-shadow: 0 2px 6px rgba(59,130,246,0.3); }
+    .btn-green { background: var(--success); color: white; }
+    .btn-red { background: var(--danger); color: white; }
+    .btn-dark-green { background: #059669; color: white; }
+    .btn-gray { background: var(--gray-600); color: white; }
+    .btn-disabled { background: #94a3b8; opacity: 0.6; cursor: not-allowed; }
+    .btn:hover { transform: translateY(-2px); filter: brightness(1.02); box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
+
+    /* tables */
+    .table-wrapper {
+      overflow-x: auto;
+      border-radius: var(--radius-sm);
+      margin-top: 20px;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
-      margin-top: 16px;
       background: white;
-      border-radius: var(--radius);
+      border-radius: var(--radius-sm);
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
-
     th {
-      background: var(--primary);
-      color: white;
-      padding: 16px;
+      background: var(--gray-100);
+      color: var(--secondary);
+      padding: 14px 18px;
       text-align: left;
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 0.85rem;
     }
-
     td {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--gray-200);
+      vertical-align: middle;
     }
-
-    tr:nth-child(even) {
-      background: #f8faff;
-    }
-
-    tr:hover {
-      background: #edf2ff;
-    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #fefce8; }
 
     .mini-input {
-      padding: 6px 10px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 13px;
-      width: 120px;
+      padding: 8px 12px;
+      border: 1px solid var(--gray-200);
+      border-radius: 40px;
+      font-size: 0.75rem;
+      width: 130px;
     }
-
-    .mini-btn {
-      padding: 6px 10px;
-      font-size: 12px;
-      margin: 2px;
+    .badge {
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      display: inline-block;
     }
-
+    .badge-success { background: #d1fae5; color: #065f46; }
+    .badge-danger { background: #fee2e2; color: #991b1b; }
     .no-data {
       text-align: center;
-      padding: 40px;
-      color: var(--text-light);
+      padding: 48px 20px;
+      color: var(--text-muted);
       font-style: italic;
-      background: #f8faff;
-      border-radius: 16px;
+      background: #fafcff;
+      border-radius: var(--radius-sm);
+    }
+    .list {
+      list-style: none;
+      padding: 8px 0;
+    }
+    .list li {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--gray-200);
+      font-weight: 500;
     }
 
-    @media (max-width: 992px) {
+    /* responsiveness */
+    @media (max-width: 950px) {
       .sidebar {
-        position: fixed;
-        left: -280px;
-        transition: left 0.4s ease;
-        z-index: 1000;
+        transform: translateX(-100%);
       }
-      .sidebar.open { left: 0; }
-      .main-content { margin-left: 0; padding: 20px; }
-      .grid { grid-template-columns: 1fr; }
+      .sidebar.open {
+        transform: translateX(0);
+      }
+      .main-content {
+        margin-left: 0;
+        padding: 28px 24px;
+      }
+      .mobile-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .actions { flex-direction: column; align-items: stretch; }
+      .btn { justify-content: center; }
+      td { display: flex; flex-wrap: wrap; gap: 8px; justify-content: space-between; align-items: center; }
+      td::before { content: attr(data-label); font-weight: 700; width: 40%; }
+      .student-table thead { display: none; }
+      .student-table tr { display: block; margin-bottom: 20px; border: 1px solid var(--gray-200); border-radius: 20px; padding: 12px; }
+      .student-table td { display: flex; border: none; padding: 8px 12px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- mobile toggle button -->
+  <button class="mobile-toggle" id="mobileSidebarToggle">
+    <i class="fas fa-bars"></i>
+  </button>
+
   <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="logo">CM</div>
-    
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <i class="fas fa-graduation-cap"></i> CM
+    </div>
     <div class="user-info">
       <h3><%= teacher.name %></h3>
       <p>Teacher Account</p>
+      <i class="fas fa-chalkboard-user" style="margin-top: 8px; opacity: 0.7;"></i>
     </div>
-
     <ul class="nav-menu">
       <li><a href="/teacher/dashboard"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
-  
       <li class="logout"><a href="/teacher/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
     </ul>
   </aside>
 
   <!-- Main Content -->
   <main class="main-content">
-    <div class="header">
-      <h1>Welcome back, <%= teacher.name %>!</h1>
-      <p>Manage your classes, students, and attendance from one place</p>
+    <div class="page-header">
+      <h1>✨ Welcome back, <%= teacher.name %>!</h1>
+      <p>Manage your classes, students, attendance and subject assignments seamlessly</p>
     </div>
 
-    <!-- Class Teacher Controls -->
-    <% if (classTeacherOf.length > 0) { %>
-    <div class="grid">
-      <% classTeacherOf.forEach(c => { %>
-      <div class="card class-card">
-        <h3>Class <%= c.className %> (ID: <%= c._id %>)</h3>
-        <div class="actions">
-          <a href="/teacher/class/<%= c._id %>/assign-subject-teachers" class="btn btn-blue btn-small">
-            Assign Teachers
-          </a>
-          <a href="/teacher/class/<%= c._id %>/create-student" class="btn btn-green btn-small">
-            Add Student
-          </a>
+    <!-- Class Teacher Cards (Primary responsibility) -->
+    <% if (classTeacherOf && classTeacherOf.length > 0) { %>
+      <div class="grid">
+        <% classTeacherOf.forEach(c => { %>
+          <div class="card class-card">
+            <h3><i class="fas fa-chalkboard"></i> Class <%= c.className %></h3>
+            <div class="actions">
+              <a href="/teacher/class/<%= c._id %>/assign-subject-teachers" class="btn btn-blue btn-small">
+                <i class="fas fa-user-plus"></i> Assign Teachers
+              </a>
+              <a href="/teacher/class/<%= c._id %>/create-student" class="btn btn-green btn-small">
+                <i class="fas fa-user-graduate"></i> Add Student
+              </a>
+              <% if (todayTakenForClasses && todayTakenForClasses.includes(c._id.toString())) { %>
+                <span class="btn btn-disabled btn-small" disabled><i class="fas fa-check-circle"></i> Attendance Taken</span>
+                <span class="badge badge-success"><i class="fas fa-calendar-check"></i> Today done</span>
+              <% } else { %>
+                <a href="/teacher/class/<%= c._id %>/attendance" class="btn btn-blue btn-small">
+                  <i class="fas fa-clipboard-list"></i> Take Attendance
+                </a>
+              <% } %>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    <% } %>
 
-          <% if (todayTakenForClasses.includes(c._id.toString())) { %>
-            <button class="btn btn-small btn-disabled" disabled>Attendance Taken</button>
-            <small style="color: var(--success); font-weight: bold;">Done for today</small>
-          <% } else { %>
-            <a href="/teacher/class/<%= c._id %>/attendance" class="btn btn-blue btn-small">
-              Take Attendance
-            </a>
-          <% } %>
+    <!-- Assigned Classes (as subject teacher) -->
+    <div class="card">
+      <h3><i class="fas fa-book-open"></i> Your Assigned Classes</h3>
+      <% if (assignedClasses && assignedClasses.length === 0) { %>
+        <div class="no-data">📌 You are not assigned to any class as a subject teacher yet.</div>
+      <% } else { %>
+        <div class="list">
+          <% assignedClasses.forEach(cls => { %>
+            <li><strong><i class="fas fa-school"></i> <%= cls.className %></strong>  <span class="badge badge-success" style="margin-left: 8px;">Subject Teacher</span></li>
+          <% }) %>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Students Table (only if teacher is class teacher) -->
+    <% if (students && students.length > 0 && classTeacherOf && classTeacherOf.length >= 1) { %>
+      <div class="card">
+        <h3><i class="fas fa-users"></i> Students in Your Classes</h3>
+        <div class="table-wrapper">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Student Name</th><th>ID</th><th>Email</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% students.forEach(s => { 
+                const remaining = s.remainingDays || 0;
+              %>
+                <tr>
+                  <td data-label="Name"><strong><%= s.name %></strong></td>
+                  <td data-label="ID"><code style="background:#f1f5f9; padding:2px 6px; border-radius: 12px;"><%= s._id.toString().slice(-6) %></code></td>
+                  <td data-label="Email"><%= s.email %></td>
+                  <td data-label="Status">
+                    <% if (remaining > 0) { %>
+                      <span class="badge badge-danger"><i class="fas fa-ban"></i> Suspended (<%= remaining %>d)</span>
+                    <% } else { %>
+                      <span class="badge badge-success"><i class="fas fa-check-circle"></i> Active</span>
+                    <% } %>
+                  </td>
+                  <td data-label="Actions">
+                    <div class="actions" style="gap: 8px; margin-top:0;">
+                      <form action="/teacher/student/update-email/<%= s._id %>" method="POST" style="display: inline-flex; gap: 6px; align-items:center;">
+                        <input type="email" name="email" placeholder="New email" required class="mini-input"/>
+                        <button class="btn btn-small btn-blue" type="submit"><i class="fas fa-sync-alt"></i> Update</button>
+                      </form>
+                      <a class="btn btn-small btn-green" href="mailto:<%= s.email %>"><i class="fas fa-envelope"></i> Mail</a>
+                      <% if (remaining > 0) { %>
+                        <form action="/teacher/student/unsuspend/<%= s._id %>" method="POST" style="display:inline">
+                          <button class="btn btn-small btn-dark-green"><i class="fas fa-play-circle"></i> Unsuspend</button>
+                        </form>
+                      <% } else { %>
+                        <form action="/teacher/student/suspend/<%= s._id %>" method="POST" style="display: inline-flex; gap: 6px; align-items:center;">
+                          <input type="number" name="days" min="1" placeholder="Days" required class="mini-input" style="width:80px;"/>
+                          <button class="btn btn-small btn-red"><i class="fas fa-pause-circle"></i> Suspend</button>
+                        </form>
+                      <% } %>
+                      <form action="/teacher/student/delete/<%= s._id %>" method="POST" onsubmit="return confirm('⚠️ Permanently delete this student?');" style="display:inline">
+                        <button class="btn btn-small btn-gray"><i class="fas fa-trash-alt"></i> Delete</button>
+                      </form>
+                    </div>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
         </div>
       </div>
-      <% }) %>
-    </div>
     <% } %>
 
-    <!-- Assigned Classes -->
+    <!-- Subjects & Assigned Teachers Table -->
     <div class="card">
-      <h3>Your Assigned Classes</h3>
-      <% if (assignedClasses.length === 0) { %>
-        <p class="no-data">You have not been assigned to any class yet.</p>
+      <h3><i class="fas fa-microscope"></i> Subjects & Teachers</h3>
+      <% if (subjectsOfClasses && subjectsOfClasses.length > 0) { %>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr><th>Class</th><th>Subject</th><th>Assigned Teacher(s)</th></tr>
+            </thead>
+            <tbody>
+              <% subjectsOfClasses.forEach(subj => { %>
+                <tr>
+                  <td data-label="Class"><%= subj.classId?.className || '—' %></td>
+                  <td data-label="Subject"><%= subj.subjectName %></td>
+                  <td data-label="Teachers">
+                    <% if (subj.subjectTeachers && subj.subjectTeachers.length) { %>
+                      <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                        <% subj.subjectTeachers.forEach(teacher => { %>
+                          <span class="badge badge-success" style="background:#e0e7ff; color:#1e40af;"><i class="fas fa-user-check"></i> <%= teacher.name %></span>
+                        <% }) %>
+                      </div>
+                    <% } else { %>
+                      <span class="badge" style="background:#f1f5f9;">Not assigned</span>
+                    <% } %>
+                  </td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
       <% } else { %>
-        <ul class="list">
-          <% assignedClasses.forEach(cls => { %>
-          <li><strong><%= cls.className %></strong> (ID: <%= cls._id %>)</li>
-          <% }) %>
-        </ul>
+        <div class="no-data"><i class="fas fa-folder-open"></i> No subjects have been configured for your classes yet.</div>
       <% } %>
-    </div>
-
-    <!-- Students Table -->
-    <% if (students.length > 0 && classTeacherOf.length>=1) { %>
-    <div class="card">
-      <h3>Students in Your Classes</h3>
-      <table class="student-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>ID</th>
-            <th>Email</th>
-            <th>Suspend Days</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% students.forEach(s => { %>
-          <tr>
-            <td><strong><%= s.name %></strong></td>
-            <td><code><%= s._id %></code></td>
-            <td><%= s.email %></td>
-            <td>
-              <% if (s.remainingDays > 0) { %>
-                <span style="color: var(--danger); font-weight: bold;"><%= s.remainingDays %> days</span>
-              <% } else { %>
-                <span style="color: var(--success);">Active</span>
-              <% } %>
-            </td>
-            <td>
-              <div class="actions">
-                <form action="/teacher/student/update-email/<%= s._id %>" method="POST" style="display:inline;">
-                  <input type="email" name="email" placeholder="New Email" required class="mini-input"/>
-                  <button class="mini-btn btn-blue" type="submit">Update</button>
-                </form>
-                <a class="mini-btn btn-green" href="mailto:<%= s.email %>">Mail</a>
-
-                <% if (s.remainingDays > 0) { %>
-                  <form action="/teacher/student/unsuspend/<%= s._id %>" method="POST" style="display:inline;">
-                    <button class="mini-btn btn-dark-green" type="submit">Unsuspend</button>
-                  </form>
-                <% } else { %>
-                  <form action="/teacher/student/suspend/<%= s._id %>" method="POST" style="display:inline;">
-                    <input type="number" name="days" min="1" placeholder="Days" required class="mini-input"/>
-                    <button class="mini-btn btn-red" type="submit">Suspend</button>
-                  </form>
-                <% } %>
-
-                <form action="/teacher/student/delete/<%= s._id %>" method="POST" onsubmit="return confirm('Permanently delete this student?');" style="display:inline;">
-                  <button class="mini-btn btn-gray" type="submit">Delete</button>
-                </form>
-              </div>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
-    <% } %>
-
-    <!-- Subjects & Teachers -->
-    <div class="card">
-      <h3>Subjects & Assigned Teachers</h3>
-      <% if(subjectsOfClasses.length > 0) { %>
-      <table>
-        <thead>
-          <tr>
-            <th>Class</th>
-            <th>Subject</th>
-            <th>Assigned Teacher(s)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% subjectsOfClasses.forEach(s => { %>
-          <tr>
-            <td><%= s.classId?.className || "Unknown" %></td>
-            <td><%= s.subjectName %></td>
-            <td>
-              <%= s.subjectTeachers.length > 0
-                  ? s.subjectTeachers.map(t => t.name).join(", ")
-                  : "No Teacher Assigned" %>
-            </td>
-          </tr>
-          <% }) %>
-        </tbody>
-      </table>
-      <% } else { %>
-      <p class="no-data">No subjects assigned yet.</p>
-      <% } %>
+      <div style="margin-top: 20px; font-size: 0.75rem; color: var(--gray-600);">
+        <i class="fas fa-info-circle"></i> Class teachers can assign subject teachers via class card.
+      </div>
     </div>
   </main>
 
+  <script>
+    // Sidebar toggle for mobile
+    const toggleBtn = document.getElementById('mobileSidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    if (toggleBtn && sidebar) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        sidebar.classList.toggle('open');
+      });
+      // close sidebar when clicking outside on mobile (optional)
+      document.addEventListener('click', (event) => {
+        if (window.innerWidth <= 950 && sidebar.classList.contains('open')) {
+          if (!sidebar.contains(event.target) && event.target !== toggleBtn && !toggleBtn.contains(event.target)) {
+            sidebar.classList.remove('open');
+          }
+        }
+      });
+    }
+
+    // responsive table labeling for small devices
+    function applyDataLabels() {
+      if (window.innerWidth <= 550) {
+        document.querySelectorAll('.student-table tbody tr').forEach(row => {
+          const cells = row.querySelectorAll('td');
+          const headers = ['Name', 'ID', 'Email', 'Status', 'Actions'];
+          cells.forEach((cell, idx) => {
+            if (headers[idx]) cell.setAttribute('data-label', headers[idx]);
+          });
+        });
+        // subjects table labels
+        document.querySelectorAll('.table-wrapper table tbody tr').forEach(row => {
+          const cells = row.querySelectorAll('td');
+          if (cells.length === 3) {
+            cells[0].setAttribute('data-label', 'Class');
+            cells[1].setAttribute('data-label', 'Subject');
+            cells[2].setAttribute('data-label', 'Assigned Teacher(s)');
+          }
+        });
+      } else {
+        document.querySelectorAll('td').forEach(td => td.removeAttribute('data-label'));
+      }
+    }
+    applyDataLabels();
+    window.addEventListener('resize', applyDataLabels);
+  </script>
+  <style>
+    /* extra polish for tables on mobile */
+    @media (max-width: 550px) {
+      .table-wrapper table, .table-wrapper thead, .table-wrapper tbody, .table-wrapper th, .table-wrapper td, .table-wrapper tr {
+        display: block;
+      }
+      .table-wrapper thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      .table-wrapper tr {
+        margin-bottom: 20px;
+        border: 1px solid var(--gray-200);
+        border-radius: 20px;
+        background: white;
+        padding: 12px;
+      }
+      .table-wrapper td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        border-bottom: 1px solid #edf2f7;
+        padding: 12px;
+      }
+      .table-wrapper td:last-child {
+        border-bottom: none;
+      }
+      .table-wrapper td::before {
+        content: attr(data-label);
+        font-weight: 700;
+        width: 40%;
+        color: #1e293b;
+      }
+      .actions {
+        justify-content: flex-start;
+      }
+    }
+  </style>
 </body>
 </html>
