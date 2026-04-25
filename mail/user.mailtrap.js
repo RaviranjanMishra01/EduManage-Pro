@@ -1,25 +1,17 @@
 const nodemailer = require("nodemailer");
 
-module.exports = async function sendEmail(
-  message,
-  sub,
-  cate,
-  UserEmail
-) {
+module.exports = async function sendEmail(message, sub, cate, UserEmail) {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: process.env.MAIL_ID,
-        pass: process.env.MAIL_PASS,
+        user: process.env.GMAIL_USER,  
+        pass: process.env.GMAIL_PASS,  
       },
-    });                                                                     
+    });
 
     const mailOptions = {
-      from: {
-        name: "CoolManagement - Don't reply",
-        address: process.env.GMAIL_USER,
-      },
+      from: `"CoolManagement - Don't Reply" <${process.env.GMAIL_USER}>`,
       to: UserEmail,
       subject: sub,
       html: message,
