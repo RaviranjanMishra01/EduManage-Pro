@@ -18,6 +18,7 @@
       --primary-dark: #1557b0;
       --success: #10b981;
       --danger: #ef4444;
+      --warning: #f59e0b;
       --text: #1e293b;
       --text-light: #64748b;
       --bg: #f8fafc;
@@ -29,6 +30,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    
     body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(135deg, #f0f7ff 0%, #e0eafc 100%);
@@ -52,12 +54,14 @@
       inset: 0;
       background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300"><path d="M0,150 Q300,250 600,150 T1200,150 L1200,300 L0,300 Z" fill="rgba(255,255,255,0.12)"/></svg>') bottom no-repeat;
       background-size: cover;
+      pointer-events: none;
     }
 
     .hero-header h1 {
       font-size: 48px;
       font-weight: 800;
       margin-bottom: 16px;
+      letter-spacing: -0.5px;
     }
 
     .hero-header p {
@@ -97,6 +101,7 @@
       background: linear-gradient(90deg, var(--primary), #3367d6);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .form-container > p {
@@ -107,16 +112,41 @@
     }
 
     /* Alert Messages */
-    .success, .error {
+    .alert {
       padding: 14px 20px;
       border-radius: 12px;
       margin-bottom: 24px;
       font-weight: 600;
       text-align: center;
       animation: fadeIn 0.5s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
     }
-    .success { background: #dcfce7; color: var(--success); border: 1px solid #86efac; }
-    .error   { background: #fee2e2; color: var(--danger); border: 1px solid #fca5a5; }
+    
+    .alert-success { 
+      background: #dcfce7; 
+      color: var(--success); 
+      border: 1px solid #86efac; 
+    }
+    
+    .alert-error { 
+      background: #fee2e2; 
+      color: var(--danger); 
+      border: 1px solid #fca5a5; 
+    }
+    
+    .alert-warning {
+      background: #fed7aa;
+      color: var(--warning);
+      border: 1px solid #fdba74;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
     /* Form Styling */
     form {
@@ -124,7 +154,11 @@
       gap: 20px;
     }
 
-    input {
+    .input-group {
+      position: relative;
+    }
+
+    input, select {
       width: 100%;
       padding: 16px 18px;
       border: 2px solid #e2e8f0;
@@ -132,9 +166,10 @@
       font-size: 16px;
       background: #fafafa;
       transition: var(--transition);
+      font-family: 'Inter', sans-serif;
     }
 
-    input:focus {
+    input:focus, select:focus {
       outline: none;
       border-color: var(--primary);
       background: white;
@@ -145,12 +180,20 @@
       color: #94a3b8;
     }
 
-    /* Optional field hint */
-    input[name="schoolId"]::placeholder::after {
-      content: " (optional)";
-      color: #94a3b8;
-      font-style: italic;
+    input:invalid:not(:placeholder-shown) {
+      border-color: var(--danger);
     }
+
+    /* Password strength indicator */
+    .password-strength {
+      margin-top: -8px;
+      font-size: 12px;
+      padding: 4px 8px;
+    }
+    
+    .strength-weak { color: var(--danger); }
+    .strength-medium { color: var(--warning); }
+    .strength-strong { color: var(--success); }
 
     /* Submit Button */
     button {
@@ -165,6 +208,7 @@
       transition: var(--transition);
       box-shadow: 0 8px 25px rgba(26, 115, 232, 0.3);
       margin-top: 12px;
+      font-family: 'Inter', sans-serif;
     }
 
     button:hover {
@@ -176,18 +220,65 @@
       transform: translateY(-1px);
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    /* Terms checkbox */
+    .terms {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 8px 0;
+      font-size: 14px;
+    }
+    
+    .terms input {
+      width: auto;
+      transform: scale(1.1);
+      margin: 0;
+    }
+    
+    .terms a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+    
+    .terms a:hover {
+      text-decoration: underline;
+    }
+
     /* Responsive */
     @media (max-width: 640px) {
       .hero-header h1 { font-size: 38px; }
       .hero-header p { font-size: 18px; }
       .form-container { padding: 40px 24px; }
+      .hero-header { padding: 100px 20px 80px; }
+    }
+
+    /* Loading spinner */
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255,255,255,0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.6s linear infinite;
+      margin-right: 8px;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navbar -->
-  <%- include("partials/nav") %>
+  <!-- Navbar (unchanged as requested) -->
+  <%- include("./partials/nav") %>
 
   <!-- Hero Header -->
   <section class="hero-header">
@@ -201,46 +292,243 @@
       <h2>Join CoolManagement</h2>
       <p>Thousands of schools trust us. Your data is safe & secure.</p>
 
-      <!-- Success/Error Message -->
-      <% if (form) { %>
-        <p class="<%= success ? 'success' : 'error' %>">
+      <!-- Enhanced Alert Messages -->
+      <% if (locals.message) { %>
+        <div class="alert alert-<%= locals.alertType || (locals.success ? 'success' : 'error') %>">
+          <i class="fas <%= locals.success ? 'fa-check-circle' : 'fa-exclamation-triangle' %>"></i>
           <%= message %>
-        </p>
+        </div>
       <% } %>
 
-      <form action="/school/create" method="POST" onsubmit="return validatePasswords()">
-        <input type="text" name="schoolName" placeholder="School Name (e.g. St. Mary's School)" required
-               pattern="^[A-Za-z0-9\s.&'-]{3,60}$" title="Enter a valid school name" />
+      <!-- Form with proper action and method -->
+      <form action="/school/create" method="POST" id="schoolForm" novalidate>
+        <!-- School Name -->
+        <div class="input-group">
+          <input type="text" 
+                 name="schoolName" 
+                 placeholder=" School Name (e.g. St. Mary's School)" 
+                 value="<%= locals.formData ? formData.schoolName : '' %>"
+                 required
+                 pattern="^[A-Za-z0-9\s.&'-]{3,60}$" 
+                 title="Enter a valid school name (3-60 characters)" />
+        </div>
 
-        <input type="email" name="email" placeholder="Principal / Admin Email" required />
+        <!-- Email -->
+        <div class="input-group">
+          <input type="email" 
+                 name="email" 
+                 placeholder=" Principal / Admin Email" 
+                 value="<%= locals.formData ? formData.email : '' %>"
+                 required />
+        </div>
 
-        <input type="text" name="schoolId" placeholder="School ID (optional – e.g. SMS2025)" 
-               pattern="^[A-Za-z0-9-]{3,20}$" />
+        <!-- School ID (Optional) -->
+        <div class="input-group">
+          <input type="text" 
+                 name="schoolId" 
+                 placeholder=" School ID (optional – e.g. SMS2025)" 
+                 value="<%= locals.formData ? formData.schoolId : '' %>"
+                 pattern="^[A-Za-z0-9-]{3,20}$" 
+                 title="Only letters, numbers, and hyphens (3-20 characters)" />
+        </div>
 
-        <input type="number" name="maxStudents" placeholder="Expected Total Students" required min="50" max="50000" />
+        <!-- Max Students -->
+        <div class="input-group">
+          <input type="number" 
+                 name="maxStudents" 
+                 placeholder=" Expected Total Students" 
+                 value="<%= locals.formData ? formData.maxStudents : '' %>"
+                 required 
+                 min="50" 
+                 max="50000" />
+        </div>
 
-        <input type="password" id="pwd" name="password" placeholder="Create Password" required minlength="6" />
+        <!-- Password -->
+        <div class="input-group">
+          <input type="password" 
+                 id="password" 
+                 name="password" 
+                 placeholder=" Create Password" 
+                 required 
+                 minlength="6" />
+        </div>
+        <div class="password-strength" id="passwordStrength"></div>
 
-        <input type="password" id="cpwd" name="confirmPassword" placeholder="Confirm Password" required />
+        <!-- Confirm Password -->
+        <div class="input-group">
+          <input type="password" 
+                 id="confirmPassword" 
+                 name="confirmPassword" 
+                 placeholder=" Confirm Password" 
+                 required />
+        </div>
 
-        <button type="submit">
-          Create My School Now
+        <!-- Terms & Conditions -->
+        <div class="terms">
+          <input type="checkbox" id="terms" required />
+          <label for="terms">
+            I agree to the <a href="/terms" target="_blank">Terms of Service</a> and 
+            <a href="/privacy" target="_blank">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit" id="submitBtn">
+          <i class="fas fa-rocket"></i> Create My School Now
         </button>
       </form>
+
+      <!-- Login Link -->
+      <div style="text-align: center; margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border);">
+        <p style="color: var(--text-light); font-size: 14px;">
+          Already have an account? 
+          <a href="/school/login" style="color: var(--primary); text-decoration: none; font-weight: 600;">
+            Login here <i class="fas fa-arrow-right"></i>
+          </a>
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <%- include("partials/footer") %>
+  <!-- Footer (unchanged as requested) -->
+  <%- include("./partials/footer") %>
 
+  <!-- Enhanced JavaScript Validation -->
   <script>
-    function validatePasswords() {
-      const p = document.getElementById("pwd").value;
-      const c = document.getElementById("cpwd").value;
-      if (p !== c) {
-        alert("Passwords do not match!");
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.getElementById('schoolForm');
+      const password = document.getElementById('password');
+      const confirmPassword = document.getElementById('confirmPassword');
+      const submitBtn = document.getElementById('submitBtn');
+      const strengthDiv = document.getElementById('passwordStrength');
+      const termsCheckbox = document.getElementById('terms');
+      
+      // Password strength checker
+      function checkPasswordStrength(pwd) {
+        if (!pwd) return '';
+        
+        let strength = 0;
+        if (pwd.length >= 8) strength++;
+        if (pwd.match(/[a-z]+/)) strength++;
+        if (pwd.match(/[A-Z]+/)) strength++;
+        if (pwd.match(/[0-9]+/)) strength++;
+        if (pwd.match(/[$@#&!]+/)) strength++;
+        
+        if (strength <= 2) return { text: 'Weak password', class: 'strength-weak' };
+        if (strength <= 4) return { text: 'Medium password', class: 'strength-medium' };
+        return { text: 'Strong password!', class: 'strength-strong' };
+      }
+      
+      // Live password strength
+      if (password) {
+        password.addEventListener('input', function() {
+          const strength = checkPasswordStrength(this.value);
+          if (this.value) {
+            strengthDiv.innerHTML = `<i class="fas fa-shield-alt"></i> ${strength.text}`;
+            strengthDiv.className = `password-strength ${strength.class}`;
+          } else {
+            strengthDiv.innerHTML = '';
+          }
+        });
+      }
+      
+      // Real-time password match validation
+      function validatePasswords() {
+        const pwd = password.value;
+        const cpwd = confirmPassword.value;
+        
+        if (cpwd) {
+          if (pwd !== cpwd) {
+            confirmPassword.setCustomValidity('Passwords do not match');
+            confirmPassword.style.borderColor = '#ef4444';
+            return false;
+          } else {
+            confirmPassword.setCustomValidity('');
+            confirmPassword.style.borderColor = '#10b981';
+            return true;
+          }
+        }
+        return true;
+      }
+      
+      if (confirmPassword) {
+        confirmPassword.addEventListener('input', validatePasswords);
+        password.addEventListener('input', validatePasswords);
+      }
+      
+      // Form submission with loading state
+      form.addEventListener('submit', function(e) {
+        // Validate passwords match
+        if (!validatePasswords()) {
+          e.preventDefault();
+          alert('❌ Passwords do not match!');
+          return false;
+        }
+        
+        // Validate terms checkbox
+        if (!termsCheckbox.checked) {
+          e.preventDefault();
+          alert('⚠️ Please accept the Terms of Service and Privacy Policy');
+          termsCheckbox.focus();
+          return false;
+        }
+        
+        // Validate password length
+        if (password.value.length < 6) {
+          e.preventDefault();
+          alert('❌ Password must be at least 6 characters long');
+          password.focus();
+          return false;
+        }
+        
+        // Show loading state
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="loading"></span> Creating School...';
+      });
+      
+      // Clear validation styling on input
+      const inputs = document.querySelectorAll('input');
+      inputs.forEach(input => {
+        input.addEventListener('input', function() {
+          this.style.borderColor = '#e2e8f0';
+        });
+      });
+      
+      // Auto-generate School ID from school name (optional feature)
+      const schoolNameInput = document.querySelector('input[name="schoolName"]');
+      const schoolIdInput = document.querySelector('input[name="schoolId"]');
+      
+      if (schoolNameInput && schoolIdInput) {
+        schoolNameInput.addEventListener('blur', function() {
+          if (!schoolIdInput.value && this.value) {
+            // Suggest ID from school name
+            let suggestedId = this.value
+              .toUpperCase()
+              .replace(/[^A-Z0-9]/g, '')
+              .substring(0, 10);
+            if (suggestedId) {
+              schoolIdInput.placeholder = `e.g., ${suggestedId}`;
+            }
+          }
+        });
+      }
+    });
+    
+    // Additional client-side validation helper
+    function validateForm() {
+      const pwd = document.getElementById('password');
+      const cpwd = document.getElementById('confirmPassword');
+      const terms = document.getElementById('terms');
+      
+      if (pwd.value !== cpwd.value) {
+        alert('❌ Passwords do not match!');
         return false;
       }
+      
+      if (!terms.checked) {
+        alert('⚠️ Please accept the Terms of Service');
+        return false;
+      }
+      
       return true;
     }
   </script>

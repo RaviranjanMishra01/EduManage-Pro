@@ -2,64 +2,95 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>School Dashboard — CoolManagement</title>
 
   <!-- Fonts & Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="stylesheet" href="/styles/footer.css" />
 
   <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :root {
       --primary: #1a73e8;
-      --primary-light: #4285f4;
       --primary-dark: #1557b0;
+      --primary-light: #4a8df7;
+      --primary-glow: rgba(26,115,232,0.12);
       --success: #10b981;
       --warning: #f59e0b;
       --danger: #ef4444;
-      --text: #1e293b;
-      --text-light: #64748b;
-      --bg: #f8fafc;
-      --card: #ffffff;
-      --border: #e2e8f0;
-      --shadow: 0 10px 30px rgba(0,0,0,0.08);
-      --radius: 18px;
-      --transition: all 0.3s ease;
+      --gray-50: #f9fafb;
+      --gray-100: #f3f4f6;
+      --gray-200: #e5e7eb;
+      --gray-600: #4b5563;
+      --gray-700: #374151;
+      --gray-800: #1f2937;
+      --text-main: #111827;
+      --text-muted: #6b7280;
+      --border-light: #eef2ff;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+      --radius-card: 24px;
+      --radius-table: 20px;
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
+      background: #f5f9ff;
+      color: var(--text-main);
+      line-height: 1.5;
     }
 
-    /* Navbar - Premium Fixed */
+    /* ========== NAVBAR (premium glass morph + fixed) ========== */
     .navbar {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      background: rgba(26, 115, 232, 0.98);
+      position: sticky;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
-      padding: 16px 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+      z-index: 1000;
+      border-bottom: 1px solid rgba(26, 115, 232, 0.15);
+      padding: 0 32px;
+    }
+
+    .nav-container {
+      max-width: 1440px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 1000;
-      box-shadow: 0 4px 20px rgba(26, 115, 232, 0.2);
+      height: 72px;
     }
 
     .nav-brand {
-      font-size: 22px;
+      font-size: 1.65rem;
       font-weight: 800;
-      color: white;
+      background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.3px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 8px;
     }
 
-    .nav-brand i { font-size: 26px; }
+    .nav-brand i {
+      background: none;
+      -webkit-background-clip: unset;
+      background-clip: unset;
+      color: var(--primary);
+      font-size: 1.6rem;
+    }
 
     .nav-links {
       display: flex;
@@ -68,17 +99,24 @@
     }
 
     .nav-links a, .dropbtn {
-      color: white;
-      text-decoration: none;
-      padding: 10px 16px;
-      border-radius: 12px;
+      background: transparent;
+      border: none;
       font-weight: 600;
-      font-size: 15px;
-      transition: var(--transition);
+      font-size: 0.95rem;
+      padding: 8px 18px;
+      border-radius: 40px;
+      transition: all 0.2s;
+      cursor: pointer;
+      color: #1f2a44;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
     }
 
     .nav-links a:hover, .dropbtn:hover {
-      background: rgba(255,255,255,0.15);
+      background: var(--primary-glow);
+      color: var(--primary);
     }
 
     .dropdown {
@@ -87,130 +125,168 @@
 
     .dropdown-content {
       position: absolute;
-      top: 100%;
-      left: 50%;
-      transform: translateX(-50%);
+      top: 48px;
+      left: 0;
       background: white;
       min-width: 220px;
-      border-radius: 14px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
-      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.1);
       opacity: 0;
       visibility: hidden;
-      transition: all 0.3s ease;
-      margin-top: 10px;
+      transform: translateY(-8px);
+      transition: all 0.25s;
+      border: 1px solid var(--border-light);
+      z-index: 1020;
     }
 
     .dropdown:hover .dropdown-content {
       opacity: 1;
       visibility: visible;
-      margin-top: 6px;
+      transform: translateY(0);
     }
 
     .dropdown-content a {
-      display: block;
-      padding: 14px 20px;
-      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 20px;
+      color: var(--gray-700);
       font-weight: 500;
-      transition: var(--transition);
+      border-radius: 0;
     }
 
-    .dropdown-content a:hover {
-      background: #f1f5f9;
+    .dropdown-content a:first-child { border-radius: 20px 20px 0 0; }
+    .dropdown-content a:last-child { border-radius: 0 0 20px 20px; }
+    .dropdown-content a:hover { background: #f0f7ff; color: var(--primary); }
+
+    .menu-toggle {
+      display: none;
+      font-size: 1.6rem;
+      background: none;
+      border: none;
       color: var(--primary);
+      cursor: pointer;
     }
 
-    .menu-toggle { display: none; font-size: 24px; color: white; cursor: pointer; }
-
-    /* Main Content */
+    /* Container */
     .container {
-      max-width: 1280px;
-      margin: 100px auto 40px;
-      padding: 0 24px;
+      max-width: 1400px;
+      margin: 32px auto 60px;
+      padding: 0 28px;
     }
 
-    .page-title {
-      font-size: 36px;
+    /* Header Section */
+    .dashboard-header {
+      margin-bottom: 36px;
+    }
+
+    .dashboard-header h1 {
+      font-size: 2.2rem;
       font-weight: 800;
-      margin-bottom: 16px;
-      background: linear-gradient(90deg, var(--primary), #3367d6);
+      letter-spacing: -0.3px;
+      background: linear-gradient(145deg, #0f2b3d, var(--primary));
       -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 8px;
     }
 
-    .page-subtitle {
-      color: var(--text-light);
-      font-size: 18px;
-      margin-bottom: 40px;
+    .dashboard-header p {
+      color: var(--text-muted);
+      font-size: 1rem;
     }
 
-    /* Stats Grid */
+    /* ===== STATS CARDS ===== */
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 24px;
-      margin-bottom: 48px;
+      margin-bottom: 56px;
     }
 
     .stat-card {
-      background: var(--card);
-      padding: 28px;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      text-align: center;
-      border: 1px solid var(--border);
-      transition: var(--transition);
+      background: white;
+      border-radius: var(--radius-card);
+      padding: 24px 20px;
+      transition: all 0.3s;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+      box-shadow: var(--shadow-md);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
 
     .stat-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(26,115,232,0.15);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+      border-color: var(--primary-light);
+    }
+
+    .stat-info .stat-value {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      line-height: 1.2;
+    }
+
+    .stat-info .stat-label {
+      color: var(--gray-600);
+      font-weight: 500;
+      margin-top: 6px;
     }
 
     .stat-icon {
-      font-size: 42px;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      width: 56px;
+      height: 56px;
+      background: linear-gradient(145deg, #eef4ff, #e0eaff);
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.8rem;
+      color: var(--primary);
     }
 
-    .stat-value {
-      font-size: 32px;
-      font-weight: 800;
-      color: var(--text);
-    }
-
-    .stat-label {
-      color: var(--text-light);
-      font-size: 15px;
-      margin-top: 8px;
-    }
-
-    /* Tables */
-    .table-container {
-      background: var(--card);
-      border-radius: var(--radius);
+    /* ===== TABLES (modern card style) ===== */
+    .table-card {
+      background: white;
+      border-radius: var(--radius-table);
+      box-shadow: var(--shadow-md);
+      margin-bottom: 48px;
       overflow: hidden;
-      box-shadow: var(--shadow);
-      margin-bottom: 40px;
-      border: 1px solid var(--border);
+      border: 1px solid #edf2f7;
     }
 
     .table-header {
-      background: linear-gradient(135deg, var(--primary), var(--primary-light));
-      color: white;
-      padding: 20px 28px;
-      font-size: 20px;
-      font-weight: 700;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      padding: 20px 28px;
+      background: white;
+      border-bottom: 1px solid var(--gray-100);
     }
 
-    .search-info {
-      font-size: 14px;
-      opacity: 0.9;
+    .table-header h3 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #0f2b3d;
+    }
+
+    .search-badge {
+      background: #f1f5f9;
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      color: var(--gray-600);
+    }
+
+    .responsive-table {
+      width: 100%;
+      overflow-x: auto;
     }
 
     table {
@@ -219,23 +295,34 @@
     }
 
     th {
-      background: #f8fafc;
-      padding: 16px;
       text-align: left;
-      font-weight: 600;
-      color: var(--text);
-      border-bottom: 2px solid var(--border);
+      padding: 16px 20px;
+      background-color: #fafcff;
+      font-weight: 700;
+      color: #1e2a44;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
     }
 
     td {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      border-bottom: 1px solid #f0f2f5;
+      color: #1f2a3e;
+      font-weight: 500;
+      vertical-align: middle;
     }
 
-    tr:hover {
-      background: #f8faff;
+    tr:last-child td {
+      border-bottom: none;
     }
 
+    tr:hover td {
+      background-color: #fafbff;
+    }
+
+    /* action buttons */
     .actions {
       display: flex;
       gap: 8px;
@@ -243,220 +330,438 @@
     }
 
     .btn {
-      padding: 8px 14px;
-      border-radius: 10px;
-      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.75rem;
       font-weight: 600;
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s;
       text-decoration: none;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: var(--transition);
+      background: white;
+      border: 1px solid #e2e8f0;
+      color: #334155;
     }
 
-    .btn-success { background: var(--success); color: white; }
-    .btn-warning { background: var(--warning); color: white; }
-    .btn-danger { background: var(--danger); color: white; }
-    .btn-primary { background: var(--primary); color: white; }
+    .btn-sm {
+      padding: 5px 12px;
+      font-size: 0.7rem;
+    }
 
-    .btn:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-primary {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: white;
+    }
 
-    .alert {
-      padding: 16px 24px;
-      border-radius: 12px;
-      background: #fef3c7;
-      color: #92400e;
+    .btn-success {
+      background: var(--success);
+      border-color: var(--success);
+      color: white;
+    }
+
+    .btn-warning {
+      background: var(--warning);
+      border-color: var(--warning);
+      color: white;
+    }
+
+    .btn-danger {
+      background: var(--danger);
+      border-color: var(--danger);
+      color: white;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #cbd5e1;
+    }
+
+    .btn-outline:hover {
+      background: #f1f5f9;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(0.96);
+    }
+
+    /* Suspend form inline */
+    .suspend-form {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f8fafc;
+      padding: 4px 10px;
+      border-radius: 48px;
+    }
+
+    .suspend-form input {
+      width: 65px;
+      padding: 6px 8px;
+      border-radius: 30px;
+      border: 1px solid #cbd5e1;
+      text-align: center;
+      font-size: 0.75rem;
+    }
+
+    .badge {
+      background: #eef2ff;
+      color: var(--primary-dark);
+      border-radius: 30px;
+      padding: 4px 10px;
+      font-size: 0.7rem;
       font-weight: 600;
-      margin-bottom: 24px;
-      border-left: 5px solid #f59e0b;
+    }
+
+    /* alert message */
+    .alert-modern {
+      background: #fffaeb;
+      border-left: 5px solid var(--warning);
+      border-radius: 16px;
+      padding: 14px 20px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 500;
+    }
+
+    /* pagination placeholder */
+    .pagination-info {
+      padding: 12px 20px;
+      border-top: 1px solid #edf2f7;
+      font-size: 0.8rem;
+      color: var(--gray-600);
+      background: #ffffff;
+    }
+
+    /* Empty state */
+    .empty-state {
+      text-align: center;
+      padding: 56px 20px;
+      color: var(--text-muted);
     }
 
     /* Responsive */
-    @media (max-width: 992px) {
-      .stats-grid { grid-template-columns: 1fr 1fr; }
+    @media (max-width: 880px) {
+      .nav-container { padding: 0 16px; }
+      .navbar { padding: 0; }
+      .nav-links { display: none; position: absolute; top: 72px; left: 0; right: 0; background: white; flex-direction: column; padding: 20px; gap: 12px; box-shadow: 0 20px 30px rgba(0,0,0,0.1); border-radius: 0 0 24px 24px; z-index: 999; }
+      .nav-links.show { display: flex; justify-content: center; align-items: center; }
+      .menu-toggle { display: block; }
+      .dropdown .dropdown-content { position: static; opacity: 1; visibility: visible; transform: none; box-shadow: none; margin-top: 6px; width: 100%; border: 1px solid #eef2ff;display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px; }
+      .stats-grid { gap: 16px; }
+      .stat-card { padding: 18px; }
+      .table-header { flex-direction: column; align-items: flex-start; gap: 12px; }
     }
 
-    @media (max-width: 768px) {
-      .navbar { padding: 14px 20px; }
-      .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--primary); flex-direction: column; }
-      .nav-links.show { display: flex; }
-      .menu-toggle { display: block; }
-      .page-title { font-size: 30px; }
-      table, thead, tbody, th, td, tr { display: block; }
-      thead tr { position: absolute; top: -9999px; left: -9999px; }
-      tr { border: 1px solid var(--border); border-radius: 12px; margin-bottom: 16px; padding: 12px; }
-      td { border: none; position: relative; padding-left: 50%; }
-      td:before { content: attr(data-label); position: absolute; left: 16px; font-weight: 600; }
+    @media (max-width: 640px) {
+      .container { padding: 0 16px; }
+      td { padding: 12px 16px; }
+      .actions { flex-direction: column; align-items: flex-start; }
+      .suspend-form { flex-wrap: wrap; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Premium Navbar -->
+  <!-- Premium Sticky Navbar (matching overall scheme) -->
   <nav class="navbar">
-    <div class="nav-brand">
-      CoolManagement
-    </div>
-    <span class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('show')">Menu</span>
-    <div class="nav-links" id="navLinks">
-      <a href="/school/dashboard">Dashboard</a>
-      
-      <div class="dropdown">
-        <button class="dropbtn">Teachers</button>
-        <div class="dropdown-content">
-          <a href="/school/teachers/create">Create Teacher</a>
-          <a href="/teacher/login">Teacher Login</a>
-        </div>
+    <div class="nav-container">
+      <div class="nav-brand">
+        <i class="fas fa-graduation-cap"></i> CoolManagement
       </div>
-
-      <div class="dropdown">
-        <button class="dropbtn">Classes</button>
-        <div class="dropdown-content">
-          <a href="/school/classes/create">Add New Class</a>
-        </div>
+      <div class="menu-toggle" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
       </div>
-
-      <a href="/school/logout">Logout</a>
+      <div class="nav-links" id="navLinks">
+        <a href="/school/dashboard"><i class="fas fa-chart-line"></i> Dashboard</a>
+        <div class="dropdown">
+          <button class="dropbtn"><i class="fas fa-chalkboard-user"></i> Teachers <i class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-content">
+            <a href="/school/teachers/create"><i class="fas fa-user-plus"></i> Create Teacher</a>
+            <a href="/teacher/login"><i class="fas fa-sign-in-alt"></i> Teacher Login</a>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="dropbtn"><i class="fas fa-layer-group"></i> Classes <i class="fas fa-chevron-down"></i></button>
+          <div class="dropdown-content">
+            <a href="/school/classes/create"><i class="fas fa-plus-circle"></i> Add New Class</a>
+          </div>
+        </div>
+        <a href="/school/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+      </div>
     </div>
   </nav>
 
-  <div class="container">
+  <main class="container">
+    <!-- header -->
+    <div class="dashboard-header">
+      <h1><i class="fas fa-school" style="color: var(--primary); margin-right: 8px;"></i> School Dashboard</h1>
+      <p>Monitor teachers, classes, attendance & take administrative actions.</p>
+    </div>
 
-    <h1 class="page-title">School Dashboard</h1>
-    <p class="page-subtitle">Welcome back! Here's everything you need to manage your school.</p>
-
-    <!-- Alert Message -->
+    <!-- Alert message (dynamic) -->
     <% if (typeof msg !== 'undefined' && msg) { %>
-      <div class="alert"><%= msg %></div>
+      <div class="alert-modern">
+        <i class="fas fa-info-circle"></i> <%= msg %>
+      </div>
     <% } %>
 
-    <!-- Stats Overview -->
+    <!-- Statistics Section (with fallback values) -->
     <div class="stats-grid">
       <div class="stat-card">
-        <div class="stat-icon">Teacher</div>
-        <div class="stat-value"><%= totalTeachers %></div>
-        <div class="stat-label">Total Teachers</div>
+        <div class="stat-info">
+          <div class="stat-value"><%= typeof totalTeachers !== 'undefined' ? totalTeachers : 0 %></div>
+          <div class="stat-label">Total Teachers</div>
+        </div>
+        <div class="stat-icon"><i class="fas fa-chalkboard-user"></i></div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">School</div>
-        <div class="stat-value"><%= totalClasses %></div>
-        <div class="stat-label">Active Classes</div>
+        <div class="stat-info">
+          <div class="stat-value"><%= typeof totalClasses !== 'undefined' ? totalClasses : 0 %></div>
+          <div class="stat-label">Active Classes</div>
+        </div>
+        <div class="stat-icon"><i class="fas fa-door-open"></i></div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">Ban</div>
-        <div class="stat-value"><%= suspendedCount %></div>
-        <div class="stat-label">Suspended Teachers</div>
+        <div class="stat-info">
+          <div class="stat-value"><%= typeof suspendedCount !== 'undefined' ? suspendedCount : 0 %></div>
+          <div class="stat-label">Suspended Teachers</div>
+        </div>
+        <div class="stat-icon"><i class="fas fa-ban"></i></div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon">Chart</div>
-        <div class="stat-value"><%= avgAttendance %>%</div>
-        <div class="stat-label">Avg. Attendance</div>
+        <div class="stat-info">
+          <div class="stat-value"><%= typeof avgAttendance !== 'undefined' ? avgAttendance : '92' %>%</div>
+          <div class="stat-label">Avg. Attendance</div>
+        </div>
+        <div class="stat-icon"><i class="fas fa-chart-simple"></i></div>
       </div>
     </div>
 
-    <!-- Teachers Table -->
-    <div class="table-container">
+    <!-- TEACHERS TABLE CARD -->
+    <div class="table-card">
       <div class="table-header">
-        <span>Teachers</span>
-        <span class="search-info">Search: "<%= q || 'None' %>" • Page <%= teacherPage %> of <%= teacherTotalPages %></span>
+        <h3><i class="fas fa-users" style="color: var(--primary);"></i> Teachers Management</h3>
+        <div class="search-badge">
+          <i class="fas fa-search"></i> Search: "<%= typeof q !== 'undefined' && q ? q : 'None' %>" · Page <%= typeof teacherPage !== 'undefined' ? teacherPage : 1 %> / <%= typeof teacherTotalPages !== 'undefined' ? teacherTotalPages : 1 %>
+        </div>
       </div>
-      <% if (teachers.length === 0) { %>
-        <p style="padding: 32px; text-align: center; color: var(--text-light);">No teachers found.</p>
-      <% } else { %>
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>ID</th>
-              <th>Phone</th>
-              <th>Email</th>
-              <th>Suspend Days</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% teachers.forEach(t => {
-              const today = new Date();
-              const remainingDays = t.suspendedUntil && t.suspendedUntil > today 
-                                    ? Math.ceil((t.suspendedUntil - today) / (1000*60*60*24))
-                                    : 0;
-            %>
-            <tr>
-              <td data-label="Name"><%= t.name %></td>
-              <td data-label="ID"><%= t._id %></td>
-              <td data-label="Phone"><%= t.phone %></td>
-              <td data-label="Email"><%= t.email %></td>
-              <td data-label="Suspended">
-                <strong><%= remainingDays > 0 ? remainingDays + ' days' : 'Active' %></strong>
-              </td>
-              <td data-label="Actions" class="actions">
-                <% if (remainingDays > 0) { %>
-                  <form method="POST" action="/school/teachers/unsuspend/<%= t._id %>" style="display:inline">
-                    <button type="submit" class="btn btn-success">Unsuspend</button>
-                  </form>
-                <% } else { %>
-                  <form method="POST" action="/school/teachers/suspend/<%= t._id %>" style="display:inline">
-                    <input type="number" name="days" placeholder="Days" min="1" required style="width:70px;padding:8px;border-radius:8px;border:1px solid #ccc;" />
-                    <button type="submit" class="btn btn-warning">Suspend</button>
-                  </form>
-                <% } %>
-                <form method="POST" action="/school/teachers/delete/<%= t._id %>" style="display:inline">
-                  <button type="submit" onclick="return confirm('Permanently delete this teacher?')" class="btn btn-danger">Delete</button>
-                </form>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      <% } %>
+      <div class="responsive-table">
+        <% if (typeof teachers !== 'undefined' && teachers.length > 0) { %>
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th><th>ID</th><th>Phone</th><th>Email</th><th>Status</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% teachers.forEach(t => { 
+                const today = new Date();
+                const isSuspended = t.suspendedUntil && new Date(t.suspendedUntil) > today;
+                const remainingDays = isSuspended ? Math.ceil((new Date(t.suspendedUntil) - today) / (86400000)) : 0;
+              %>
+                <tr>
+                  <td data-label="Name"><%= t.name %></td>
+                  <td data-label="ID"><%= t._id?.toString().slice(-6) || t._id %></td>
+                  <td data-label="Phone"><%= t.phone || '—' %></td>
+                  <td data-label="Email"><%= t.email %></td>
+                  <td data-label="Suspended">
+                    <% if (isSuspended) { %>
+                      <span class="badge" style="background:#fef3c7; color:#b45309;"><i class="fas fa-clock"></i> Suspended (<%= remainingDays %>d left)</span>
+                    <% } else { %>
+                      <span class="badge" style="background:#e0f2fe; color:#0369a1;"><i class="fas fa-check-circle"></i> Active</span>
+                    <% } %>
+                  </td>
+                  <td data-label="Actions" class="actions">
+                    <% if (isSuspended) { %>
+                      <form method="POST" action="/school/teachers/unsuspend/<%= t._id %>" style="display:inline">
+                        <button type="submit" class="btn btn-success btn-sm"><i class="fas fa-play-circle"></i> Unsuspend</button>
+                      </form>
+                    <% } else { %>
+                      <form method="POST" action="/school/teachers/suspend/<%= t._id %>" class="suspend-form">
+                        <input type="number" name="days" placeholder="Days" min="1" required />
+                        <button type="submit" class="btn btn-warning btn-sm"><i class="fas fa-pause-circle"></i> Suspend</button>
+                      </form>
+                    <% } %>
+                    <form method="POST" action="/school/teachers/delete/<%= t._id %>" style="display:inline" onsubmit="return confirm('⚠️ Permanently delete teacher? All associated data will be removed.');">
+                      <button type="submit" class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i> Delete</button>
+                    </form>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="empty-state">
+            <i class="fas fa-user-slash" style="font-size: 48px; color: #cbd5e1;"></i>
+            <p>No teachers found. <a href="/school/teachers/create" style="color: var(--primary);">Create first teacher</a></p>
+          </div>
+        <% } %>
+      </div>
+      <div class="pagination-info">
+        <i class="fas fa-info-circle"></i> Showing <%= teachers ? teachers.length : 0 %> entries · Manage teacher suspensions and profiles.
+      </div>
     </div>
 
-    <!-- Classes Table -->
-    <div class="table-container">
+    <!-- CLASSES TABLE CARD -->
+    <div class="table-card">
       <div class="table-header">
-        <span>Classes</span>
-        <span class="search-info">Search: "<%= cq || 'None' %>" • Page <%= classPage %> of <%= classTotalPages %></span>
+        <h3><i class="fas fa-book-open" style="color: var(--primary);"></i> Classes & Sections</h3>
+        <div class="search-badge">
+          <i class="fas fa-search"></i> Search: "<%= typeof cq !== 'undefined' && cq ? cq : 'None' %>" · Page <%= typeof classPage !== 'undefined' ? classPage : 1 %> / <%= typeof classTotalPages !== 'undefined' ? classTotalPages : 1 %>
+        </div>
       </div>
-      <% if (classes.length === 0) { %>
-        <p style="padding: 32px; text-align: center; color: var(--text-light);">No classes found.</p>
-      <% } else { %>
-        <table>
-          <thead>
-            <tr>
-              <th>Class Name</th>
-              <th>Teacher</th>
-              <th>Subjects</th>
-              <th>Students</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% classes.forEach(c => { %>
-            <tr>
-              <td data-label="Class"><%= c.className %></td>
-              <td data-label="Teacher"><%= c.classTeacherName || 'Not Assigned' %></td>
-              <td data-label="Subjects"><%= (c.subjects && c.subjects.length) ? c.subjects.join(", ") : "—" %></td>
-              <td data-label="Students"><%= c.totalStudents %></td>
-              <td data-label="Actions" class="actions">
-                <% if (c.isActive) { %>
-                  <a href="/school/classes/deactivate/<%= c._id %>" class="btn btn-warning">Deactivate</a>
-                <% } else { %>
-                  <a href="/school/classes/activate/<%= c._id %>" class="btn btn-success">Activate</a>
-                <% } %>
-                <a href="/school/classes/edit/<%= c._id %>" class="btn btn-primary">Edit</a>
-                <a href="/school/classes/delete/<%= c._id %>" onclick="return confirm('Delete this class permanently?')" class="btn btn-danger">Delete</a>
-              </td>
-            </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      <% } %>
+      <div class="responsive-table">
+        <% if (typeof classes !== 'undefined' && classes.length > 0) { %>
+          <table>
+            <thead>
+              <tr><th>Class Name</th><th>Teacher</th><th>Subjects</th><th>Students</th><th>Status</th><th>Actions</th></tr>
+            </thead>
+            <tbody>
+              <% classes.forEach(c => { %>
+                <tr>
+                  <td data-label="Class"><%= c.className %></td>
+                  <td data-label="Teacher"><%= c.classTeacherName || '—' %></td>
+                  <td data-label="Subjects"><%= (c.subjects && c.subjects.length) ? c.subjects.slice(0,2).join(", ") + (c.subjects.length > 2 ? '…' : '') : '—' %></td>
+                  <td data-label="Students"><%= c.totalStudents || 0 %></td>
+                  <td data-label="Status">
+                    <% if (c.isActive) { %>
+                      <span class="badge" style="background:#d1fae5; color:#065f46;"><i class="fas fa-check-circle"></i> Active</span>
+                    <% } else { %>
+                      <span class="badge" style="background:#fee2e2; color:#991b1b;"><i class="fas fa-ban"></i> Inactive</span>
+                    <% } %>
+                  </td>
+                  <td data-label="Actions" class="actions">
+                    <% if (c.isActive) { %>
+                      <a href="/school/classes/deactivate/<%= c._id %>" class="btn btn-warning btn-sm"><i class="fas fa-eye-slash"></i> Deactivate</a>
+                    <% } else { %>
+                      <a href="/school/classes/activate/<%= c._id %>" class="btn btn-success btn-sm"><i class="fas fa-eye"></i> Activate</a>
+                    <% } %>
+                    <a href="/school/classes/edit/<%= c._id %>" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i> Edit</a>
+                    <a href="/school/classes/delete/<%= c._id %>" class="btn btn-danger btn-sm" onclick="return confirm('Delete class permanently? This will remove student associations.')"><i class="fas fa-trash"></i> Delete</a>
+                  </td>
+                </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        <% } else { %>
+          <div class="empty-state">
+            <i class="fas fa-layer-group" style="font-size: 48px; color: #cbd5e1;"></i>
+            <p>No classes found. <a href="/school/classes/create" style="color: var(--primary);">Add your first class</a></p>
+          </div>
+        <% } %>
+      </div>
+      <div class="pagination-info">
+        <i class="fas fa-chalkboard"></i> Manage class details, assign teachers, and track enrollment.
+      </div>
     </div>
+  </main>
 
-  </div>
-
-  <!-- Footer -->
+  <!-- Footer partial -->
   <%- include("partials/footer") %>
 
+  <script>
+    // Mobile menu toggle + responsive behaviour
+    const toggleBtn = document.getElementById('mobileMenuBtn');
+    const navLinks = document.getElementById('navLinks');
+    if (toggleBtn && navLinks) {
+      toggleBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        navLinks.classList.toggle('show');
+      });
+      // Close when clicking outside (simple)
+      document.addEventListener('click', (event) => {
+        if (!navLinks.contains(event.target) && !toggleBtn.contains(event.target)) {
+          navLinks.classList.remove('show');
+        }
+      });
+    }
+    // Optional: small enhancement for dropdowns on mobile (avoid hover issues)
+    if (window.innerWidth <= 880) {
+      const dropBtns = document.querySelectorAll('.dropbtn');
+      dropBtns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          const parent = btn.closest('.dropdown');
+          if (parent) {
+            const content = parent.querySelector('.dropdown-content');
+            if (content) content.classList.toggle('show-mobile');
+            // close others
+            document.querySelectorAll('.dropdown-content.show-mobile').forEach(c => {
+              if (c !== content) c.classList.remove('show-mobile');
+            });
+          }
+        });
+      });
+    }
+  </script>
+  <style>
+    /* mobile dropdown fix */
+    @media (max-width: 880px) {
+      .dropdown-content.show-mobile {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0);
+        position: relative;
+        margin-top: 4px;
+      }
+      .dropdown-content {
+        position: relative;
+        top: auto;
+        left: auto;
+        opacity: 0;
+        visibility: hidden;
+        transition: none;
+      }
+    }
+    /* table data-label for mobile */
+    @media (max-width: 640px) {
+      .responsive-table table, .responsive-table thead, .responsive-table tbody, .responsive-table th, .responsive-table td, .responsive-table tr {
+        display: block;
+      }
+      .responsive-table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+      }
+      .responsive-table tr {
+        border: 1px solid var(--gray-200);
+        border-radius: 20px;
+        margin-bottom: 16px;
+        padding: 12px;
+      }
+      .responsive-table td {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        padding: 12px 8px;
+        border-bottom: 1px solid #f0f2f5;
+      }
+      .responsive-table td:before {
+        content: attr(data-label);
+        font-weight: 700;
+        width: 40%;
+        color: #2d3a5e;
+      }
+      .responsive-table td:last-child {
+        border-bottom: none;
+      }
+      .actions {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+  </style>
 </body>
 </html>
