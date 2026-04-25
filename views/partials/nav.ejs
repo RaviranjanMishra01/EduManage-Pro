@@ -1,26 +1,29 @@
-HTML<!-- NAVBAR -->
 <nav class="navbar">
   <div class="nav-container">
     
     <!-- Logo -->
     <a href="/" class="nav-logo">
       <span class="logo-icon">CM</span>
-      <span class="logo-text">CoolManagement</span>
+      <span class="logo-text">EduManage Pro</span>
     </a>
 
     <!-- Desktop Menu -->
     <ul class="nav-menu">
       <li><a href="/school/create" class="nav-link">Create School</a></li>
+      
+      <!-- Multiple Options Dropdown 1 -->
       <li class="dropdown">
         <a href="#" class="nav-link dropdown-toggle">
           Login <i class="fas fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu">
-          <li><a href="/teacher/login"><i class="fas fa-chalkboard-teacher"></i> Teacher Login</a></li>
+          <li><a href="/teacher/login"><i class="fas fa-chalkboard-user"></i> Teacher Login</a></li>
           <li><a href="/school/login"><i class="fas fa-school"></i> School Login</a></li>
-
         </ul>
       </li>
+      
+      
+      
       <li><a href="/about" class="nav-link">About</a></li>
       <li><a href="/contact" class="nav-link">Contact</a></li>
       <li>
@@ -30,7 +33,7 @@ HTML<!-- NAVBAR -->
       </li>
     </ul>
 
-    <!-- Mobile Menu Button -->
+    <!-- Mobile Menu Button - FIXED POSITION -->
     <div class="menu-toggle" id="mobile-menu">
       <span class="bar"></span>
       <span class="bar"></span>
@@ -38,21 +41,35 @@ HTML<!-- NAVBAR -->
     </div>
   </div>
 
-  <!-- Mobile Menu Overlay (appears when open) -->
+  <!-- Mobile Menu Overlay - FIXED POSITIONING -->
   <div class="mobile-menu-overlay" id="mobile-overlay">
-    <div class="mobile-menu-content">
+    <div class="mobile-menu-header">
       <a href="/" class="mobile-logo">
         <span class="logo-icon">CM</span> CoolManagement
       </a>
-      <ul class="mobile-nav-links">
-        <li><a href="/school/create">Create School</a></li>
-        <li><a href="/teacher/login">Teacher Login</a></li>
-        <li><a href="/school/login">School Login</a></li>
-        <li><a href="/admin/login">Admin Login</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/school/login" class="btn-primary mobile-cta">Get Started Now</a></li>
-      </ul>
+      <button class="close-menu" id="close-menu">&times;</button>
     </div>
+    <ul class="mobile-nav-links">
+      <li><a href="/school/create"><i class="fas fa-plus-circle"></i> Create School</a></li>
+      
+      <!-- Mobile Login Section with Submenu -->
+      <li class="mobile-dropdown">
+        <a href="#" class="mobile-dropdown-toggle">
+          <i class="fas fa-sign-in-alt"></i> Login Options <i class="fas fa-chevron-down"></i>
+        </a>
+        <ul class="mobile-submenu">
+          <li><a href="/teacher/login"><i class="fas fa-chalkboard-user"></i> Teacher Login</a></li>
+          <li><a href="/school/login"><i class="fas fa-school"></i> School Login</a></li>
+        </ul>
+      </li>
+    
+      
+      <li><a href="/about"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="/contact"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li><a href="/school/login" class="btn-primary mobile-cta"><i class="fas fa-rocket"></i> Get Started</a></li>
+    </ul>
   </div>
+  
+  <!-- Backdrop -->
+  <div id="backdrop-overlay" class="overlay-backdrop"></div>
 </nav>
