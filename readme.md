@@ -13,9 +13,9 @@
       <td align="center"><b>👨‍🏫 Teacher Dashboard</b></td>
     </tr>
     <tr>
-      <td><img src="public/images/EduManage.png" alt="Home Page"></td>
-      <td><img src="public/images/SchoolDashboard.png" alt="School Dashboard"></td>
-      <td><img src="public/images/TeaccherDash.png" alt="Teacher Dashboard"></td>
+      <td><img src="public/Images/EduManage.png" alt="Home Page"></td>
+      <td><img src="public/Images/SchoolDashboard.png" alt="School Dashboard"></td>
+      <td><img src="public/Images/TeaccherDash.png" alt="Teacher Dashboard"></td>
     </tr>
 
   </table>
