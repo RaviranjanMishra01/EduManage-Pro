@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A complete school managment app in node and ejs",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "dev":"nodemon index"
   },
   "author": "Raviranjan Kumar",
   "license": "ISC",
