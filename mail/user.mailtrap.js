@@ -11,7 +11,7 @@ module.exports = async function sendEmail(message, sub, cate, UserEmail) {
     });
 
     const mailOptions = {
-      from: `"CoolManagement - Don't Reply" <${process.env.GMAIL_USER}>`,
+      from: `"EduManage.png - Don't Reply" <${process.env.GMAIL_USER}>`,
       to: UserEmail,
       subject: sub,
       html: message,

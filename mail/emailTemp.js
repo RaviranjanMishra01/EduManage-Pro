@@ -22,7 +22,7 @@ const VERIFICATION_EMAIL_TEMPLATE = `
 
     <p>If you did not request this, you can ignore this email.</p>
 
-    <p>Regards,<br><strong> CoolManagement System</strong></p>
+    <p>Regards,<br><strong> EduManage.png System</strong></p>
   </div>
 
   <div style="text-align: center; margin-top: 20px; color: #aaa; font-size: 0.8em;">
