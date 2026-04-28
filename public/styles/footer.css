@@ -257,6 +257,9 @@
     }
   }
   @media (max-width: 480px) {
+    .footer-col h4 {
+      text-align: center;
+    }
     .footer-container {
       grid-template-columns: 1fr;
     }
